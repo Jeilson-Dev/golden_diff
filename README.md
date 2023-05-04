@@ -12,7 +12,8 @@ this is pretty simple above the image has a slider that reveals the expected ima
 
 Supose that we develop this screen:
 
-<img src="readme_resources/login_screen_masterImage.png" width="500">
+![image](https://user-images.githubusercontent.com/46649531/236210509-4a09e477-be94-4842-9daa-c1d5e2978f22.png)
+
 
 We make some changes on theme and when run the tests it fails.
 
@@ -21,11 +22,12 @@ We make some changes on theme and when run the tests it fails.
 
 Here it's where the fails can be found:
 
-<img src="readme_resources/extension_place.png" width="500">
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/46649531/236210392-023905e1-4b28-4021-a8aa-6c9079792279.png">
+
 
 This shows how easy is compare the images:
 
-<img src="readme_resources/comparing.gif" width="500">
+![image](https://user-images.githubusercontent.com/46649531/236210692-c65e8ee1-9542-443e-8013-1d51530f7026.gif)
 
 
 ## Known Issues
