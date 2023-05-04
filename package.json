@@ -3,7 +3,12 @@
   "displayName": "golden-diff",
   "publisher": "JeilsonAraujo",
   "description": "This help you to see easily differences between golden failures",
-  "version": "0.0.1",
+  "icon": "assets/golden_icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeilsonaraujo/golden_diff.git"
+  },
+  "version": "0.0.1+1",
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -44,10 +49,6 @@
         }
       }
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jeilsonaraujo/golden_diff.git"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

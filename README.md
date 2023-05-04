@@ -44,6 +44,6 @@ Initial release of Golden Test Failures
 
 
 ---
-
+<a href="https://www.flaticon.com/free-icons/golden-retriever" title="golden retriever icons">Golden retriever icons created by Freepik - Flaticon</a>
 
 **Enjoy!**
