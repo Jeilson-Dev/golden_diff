@@ -37,6 +37,9 @@ I noticed that the list is not sorted, whe  you refresh sometimes the items will
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
+* change icon on primary sidebar
+* added other views to see individual tested master masked and isolated
+* adedd hover to easy toggle on tested and master image
 
 ### 1.0.0
 
