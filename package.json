@@ -3,14 +3,11 @@
   "displayName": "Golden Diff",
   "publisher": "JeilsonAraujo",
   "description": "This help you to see easily differences between golden failures",
-<<<<<<< Updated upstream
   "icon": "assets/golden_icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeilsonaraujo/golden_diff.git"
   },
-=======
->>>>>>> Stashed changes
   "version": "0.0.2",
   "engines": {
     "vscode": "^1.77.0"
