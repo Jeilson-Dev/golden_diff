@@ -1,6 +1,6 @@
 {
   "name": "golden-diff",
-  "displayName": "golden-diff",
+  "displayName": "Golden Diff",
   "publisher": "JeilsonAraujo",
   "description": "This help you to see easily differences between golden failures",
   "icon": "assets/golden_icon.png",
@@ -13,7 +13,7 @@
     "vscode": "^1.77.0"
   },
   "categories": [
-    "Other"
+    "Testing"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -22,7 +22,9 @@
       "test": [
         {
           "id": "golden_failures",
-          "name": "Golden Test Failures"
+          "name": "Golden Test Failures",
+          "icon": "assets/golden_outlined.png",
+          "contextualTitle": "Golden Test Failures"
         }
       ]
     },
@@ -38,7 +40,7 @@
     "commands": [
       {
         "command": "golden_failures.item_clicked",
-        "title": "cwt tree view item"
+        "title": "tree view item"
       },
       {
         "command": "golden_failures.refresh",
