@@ -35,15 +35,19 @@ This shows how easy is compare the images:
 I noticed that the list is not sorted, whe  you refresh sometimes the items will be on diferent order.
 
 ## Release Notes
+### 0.0.1
+* Initial release with basic features
+### 0.0.2
+* Included a wonderful icon
+### 0.0.3
 
-Users appreciate release notes as you update your extension.
-* change icon on primary sidebar
 * added other views to see individual tested master masked and isolated
 * adedd hover to easy toggle on tested and master image
-
+* change icon on primary sidebar
 ### 1.0.0
+* fix size aspect ratio
+* preparing code to new features
 
-Initial release of Golden Test Failures
 
 
 ---

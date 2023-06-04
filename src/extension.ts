@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { goldesNameSpace } from './tree_view';
+import { goldensNameSpace } from './tree_view';
 
 
 export function activate(context: vscode.ExtensionContext) {
 
-	let tree = new goldesNameSpace.TreeGoldenView();
+	let tree = new goldensNameSpace.TreeGoldenView();
 	vscode.window.registerTreeDataProvider('golden_failures', tree);
 	tree.refresh();
 

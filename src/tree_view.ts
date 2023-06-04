@@ -1,31 +1,13 @@
 import * as vscode from 'vscode';
+const sizeOf = require('image-size');
+const fs = require('fs');
 
-export namespace goldesNameSpace {
-
-    class GoldenItem extends vscode.TreeItem {
-        readonly label: string | undefined;
-        readonly imageMaster: string | undefined;
-        readonly imageFailure: string | undefined;
-        readonly imageIsolated: string | undefined;
-        readonly imageMasked: string | undefined;
-
-        public children: GoldenItem[] | undefined;
-
-        constructor(label: string, imageMaster: string, imageFailure: string, imageIsolated: string, imageMasked: string) {
-            super(label, vscode.TreeItemCollapsibleState.None);
-            this.imageMaster = imageMaster;
-            this.imageFailure = imageFailure;
-            this.imageIsolated = imageIsolated;
-            this.imageMasked = imageMasked;
-            this.collapsibleState = vscode.TreeItemCollapsibleState.None;
-        }
-
-
-    }
-
-    export class TreeGoldenView implements vscode.TreeDataProvider<GoldenItem>
-    {
+import { GoldenItem } from './golden_item';
+import { GoldenProject } from './golden_project';
+export namespace goldensNameSpace {
+    export class TreeGoldenView implements vscode.TreeDataProvider<GoldenItem> {
         goldenData: GoldenItem[] = [];
+        private projects: GoldenProject[] = [];
 
         private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
 
@@ -56,22 +38,78 @@ export namespace goldesNameSpace {
 
         public async getGoldens() {
             const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
-
+            let projectsPattern = '**/pubspec.yaml';
             let filePattern = '**/*_testImage.png';
+            const excludePattern = '**/{ios,macos,windows,android,linux,.*}/**';
 
             if (!workspaceRoot) { vscode.window.showInformationMessage('Its an empty workspace'); }
 
             else {
+
+
+                const projectsFolder = await vscode.workspace.findFiles(projectsPattern, excludePattern);
+
+                const projects = (await Promise.all(projectsFolder.map(async (project) => {
+                    let projectFolder = project.path.replace('pubspec.yaml', 'test/golden_test');
+                    if (fs.existsSync(projectFolder)) {
+                        return projectFolder;
+                    }
+                }
+                ))).filter((project) => project !== undefined);
+
+
+
+                console.log(projects);
                 let fileNames = await vscode.workspace.findFiles(filePattern);
-                fileNames.map((failureImage) => {
+
+                await Promise.all(fileNames.map(async (failureImage) => {
+                    let width, height;
+                    try {
+                        const data = await fs.promises.readFile(failureImage.path);
+                        const dimensions = sizeOf(data);
+                        const originalWidth = dimensions.width;
+                        const originalHeight = dimensions.height;
+                        const maxWidth = 1000;
+                        const maxHeight = 700;
+                        const originalRatio = originalWidth / originalHeight;
+
+
+                        if (originalWidth > maxWidth) {
+                            width = maxWidth;
+                            height = Math.round(width / originalRatio);
+                            if (height > maxHeight) {
+                                height = maxHeight;
+                                width = Math.round(height * originalRatio);
+                            }
+                        }
+
+                        else if (originalHeight > maxHeight) {
+                            height = maxHeight;
+                            width = Math.round(height * originalRatio);
+                            if (width > maxWidth) {
+                                width = maxWidth;
+                                height = Math.round(width / originalRatio);
+                            }
+                        }
+
+                        else {
+                            width = originalWidth;
+                            height = originalHeight;
+                        }
+
+                    } catch (err) {
+                        console.error('Fail to read file:', err);
+                    }
+
                     let labelArray = failureImage.path.split('/');
                     let label = labelArray[labelArray.length - 1].replace('_testImage.png', '');
                     let imageFailure = failureImage.path;
                     let imageMaster = failureImage.path.replace('_testImage.png', '_masterImage.png');
                     let imageIsolated = failureImage.path.replace('_testImage.png', '_isolatedDiff.png');
                     let imageMasked = failureImage.path.replace('_testImage.png', '_maskedDiff.png');
-                    return this.goldenData.push(new GoldenItem(label, imageMaster, imageFailure, imageIsolated, imageMasked));
-                });
+                    return this.goldenData.push(new GoldenItem(label, imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
+                }));
+
             }
         }
         itemClicked(item: GoldenItem) {
@@ -88,7 +126,7 @@ export namespace goldesNameSpace {
                         background-color: #f1f1f1;
                     }
 
-                    /* tbb style */
+                    /* tab style */
                     .tab button {
                         background-color: inherit;
                         float: left;
@@ -113,11 +151,11 @@ export namespace goldesNameSpace {
                     }
 
                     section div:first-child {
-                        width: 1000px;
-                        height: 600px;
+                        width: ${item.width}px;
+                        height: ${item.height}px;
                         background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageMaster!))}');
                         background-repeat: no-repeat;
-                        background-size: 1000px 600px;
+                        background-size: ${item.width}px ${item.height}px ;
                         position: relative;
                     }
             
@@ -125,18 +163,44 @@ export namespace goldesNameSpace {
                         border-right: solid;
                         border-color: crimson;
                         border-width: 1px;
-                        width: 1000px;
-                        height: 600px;
-                        margin-top: -600px;
+                        width: ${item.width}px;
+                        height: ${item.height}px;
+                        margin-top: -${item.height}px;
                         margin-left: 0px;
                         background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageFailure!))}');
                         background-repeat: no-repeat;
-                        background-size: 1000px 600px;
+                        background-size: ${item.width}px ${item.height}px;
                         position: relative;
                     }
         
                     .slider-width100 {
-                        width: 1000px;
+                        width: ${item.width}px;
+                    }
+
+                    @media screen and (-webkit-min-device-pixel-ratio:0) {
+                        input[type='range'] {
+                          overflow: hidden;
+                          width: ${item.width}px;
+                          -webkit-appearance: none;
+                          background-color: #51e312;
+                        }
+                        
+                        input[type='range']::-webkit-slider-runnable-track {
+                          height: 10px;
+                          -webkit-appearance: none;
+                          color: #cc0000;
+                          margin-top: -1px;
+                        }
+                        
+                        input[type='range']::-webkit-slider-thumb {
+                          width: 10px;
+                          -webkit-appearance: none;
+                          height: 10px;
+                          cursor: ew-resize;
+                          background: #434343;
+                          box-shadow: -${item.width}px 0 0 ${item.width}px #cc0000;
+                        }
+                    
                     }
                 </style>
             </head>
@@ -144,60 +208,58 @@ export namespace goldesNameSpace {
             <body>
 
                 <div class="tab">
-                    <button class="tablinks" onclick="openTab(event, 'Tab1')">Compare (Test - Master)</button>
-                    <button class="tablinks" onclick="openTab(event, 'Tab2')">Test Image</button>
-                    <button class="tablinks" onclick="openTab(event, 'Tab3')">Master Image</button>
-                    <button class="tablinks" onclick="openTab(event, 'Tab4')">Isolated Image</button>
-                    <button class="tablinks" onclick="openTab(event, 'Tab5')">Masked Image</button>
+                    <button class="tablinks"  id="firstTab" onclick="openTab(event, 'Tab1')">Diff [Test < > Master]<br>Hover To Compare</button>
+                    <button class="tablinks" onclick="openTab(event, 'Tab2')">Test Image<br>[Failure]</button>
+                    <button class="tablinks" onclick="openTab(event, 'Tab3')">Master Image<br>[Expect]</button>
+                    <button class="tablinks" onclick="openTab(event, 'Tab4')">Isolated Image<br>&nbsp</button>
+                    <button class="tablinks" onclick="openTab(event, 'Tab5')">Masked Image<br>&nbsp</button>
                 </div>
 
                 <div id="Tab1" class="tabcontent">
                     <section>
                         <div></div>
-                        <div id="last" style="width: 1000px;"></div>
+                        <div id="last" style="${item.width}px;"></div>
                     </section>
                     <br>
                     <input id="slider" class="slider-width100" type="range" oninput="changeWidth(this.value)" min="0" max="100" value="100">
-        
                 </div>
 
                 <div id="Tab2" class="tabcontent">
                     <div style="background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageFailure!))}');  
-                    width: 1000px;
-                    height: 600px;
-                    background-repeat: no-repeat;
-                    background-size: 1000px 600px;" >
+                        width: ${item.width}px;
+                        height: ${item.height}px;
+                        background-repeat: no-repeat;
+                        background-size:  ${item.width}px ${item.height}px;" >
                     </div>
                     <div style="height: 37px;"></div>
-                    
                 </div>
 
                 <div id="Tab3" class="tabcontent">
                 <div style="background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageMaster!))}');  
-                width: 1000px;
-                height: 600px;
-                background-repeat: no-repeat;
-                background-size: 1000px 600px;" >
+                width: ${item.width}px;
+                    height: ${item.height}px;
+                    background-repeat: no-repeat;
+                    background-size:  ${item.width}px ${item.height}px;" >
                 </div>
                 <div style="height: 37px;"></div>
                 </div>
                
                 <div id="Tab4" class="tabcontent">
                 <div style="background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageIsolated!))}');  
-                width: 1000px;
-                height: 600px;
+                width: ${item.width}px;
+                height: ${item.height}px;
                 background-repeat: no-repeat;
-                background-size: 1000px 600px;" >
+                background-size:  ${item.width}px ${item.height}px;" >
                 </div>
                 <div style="height: 37px;"></div>
                 </div>
                
                 <div id="Tab5" class="tabcontent">
                 <div style="background: url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageMasked!))}');  
-                width: 1000px;
-                height: 600px;
+                width: ${item.width}px;
+                height: ${item.height}px;
                 background-repeat: no-repeat;
-                background-size: 1000px 600px;" >
+                background-size:  ${item.width}px ${item.height}px;" >
                 </div>
                 <div style="height: 37px;"></div>
                 </div>
@@ -220,20 +282,18 @@ export namespace goldesNameSpace {
                     document.getElementsByClassName("tablinks")[0].click();
 
                     const input = document.querySelector("#slider")
-                    input.addEventListener("input", (event) => document.querySelector("#last").style.width = event.target.value * 10 + 'px');
+                    input.addEventListener("input", (event) => document.querySelector("#last").style.width = ${item.width}/100 * event.target.value  + 'px');
                     
-                    const element = document.querySelector("#last");
+                    const firstTab = document.querySelector("#firstTab");
 
-                    element.addEventListener('mouseenter', () => {
+                    firstTab.addEventListener('mouseenter', () => {
                         document.querySelector("#last").style.width='0px';
                         document.querySelector("#slider").value=0;
                       });
                       
-                      element.addEventListener('mouseleave', () => {
-                        document.querySelector("#last").style.width='1000px';
+                      firstTab.addEventListener('mouseleave', () => {
+                        document.querySelector("#last").style.width='${item.width}px';
                         document.querySelector("#slider").value=100;
-
-
                       });
 
                 </script>
