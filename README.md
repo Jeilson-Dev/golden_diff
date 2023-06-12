@@ -50,6 +50,10 @@ I noticed that the list is not sorted, whe  you refresh sometimes the items will
 ### 1.0.1
 * added clear function
 * tree view by project
+### 1.0.2
+* projects and itens are sorted
+* fix duplicated itens on tree
+
 
 
 

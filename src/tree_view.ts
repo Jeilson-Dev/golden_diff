@@ -9,14 +9,14 @@ export namespace goldensNameSpace {
     export class TreeGoldenView implements vscode.TreeDataProvider<GoldenItem> {
 
         projectsData: GoldenItem[] = [];
-
+        isRefreshing = false;
         private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
 
         readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
 
         constructor() {
-            vscode.commands.registerCommand('golden_failures.itemClicked', r => this.itemClicked(r));
-            vscode.commands.registerCommand('golden_failures.refresh', () => this.refresh());
+            vscode.commands.registerCommand('golden_failures.itemClicked', item => this.itemClicked(item));
+            vscode.commands.registerCommand('golden_failures.refresh', () => this.isRefreshing ? undefined : this.refresh());
             vscode.commands.registerCommand('golden_failures.clear', () => this.clearGoldenFailures());
 
         }
@@ -32,12 +32,14 @@ export namespace goldensNameSpace {
         }
 
         public async refresh() {
+            this.isRefreshing = true;
             if (vscode.workspace.workspaceFolders) {
+                this.onDidChangeGoldenTreeData.fire(undefined);
                 this.projectsData = [];
                 await this.getProjects();
-
                 this.onDidChangeGoldenTreeData.fire(undefined);
             }
+            this.isRefreshing = false;
         }
 
         public async clearGoldenFailures() {
@@ -80,21 +82,20 @@ export namespace goldensNameSpace {
                     await this.getGoldens(project);
                 });
 
-
+                this.projectsData.sort((projectA, projectB) => projectA.label.localeCompare(projectB.label));
+                console.log(new Set(this.projectsData));
+                this.projectsData = Array.from(new Set(this.projectsData));
+                console.log(this.projectsData);
             }
         }
 
         public async getGoldens(project: GoldenItem) {
             const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
 
-            let filePattern = '**/*_testImage.png';
-
-
             if (!workspaceRoot) { vscode.window.showInformationMessage('Its an empty workspace'); }
 
             else {
-
-
+                let filePattern = '**/*_testImage.png';
                 let failures = await vscode.workspace.findFiles(filePattern);
                 let fileNames = failures.filter(file => {
                     const filePath = file.fsPath;
@@ -151,6 +152,7 @@ export namespace goldensNameSpace {
                 }));
 
             }
+            project.children.sort((failureA, failureB) => failureA.label.localeCompare(failureB.label));
         }
         itemClicked(item: GoldenItem) {
             const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });

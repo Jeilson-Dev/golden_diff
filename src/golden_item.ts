@@ -3,19 +3,20 @@ const sizeOf = require('image-size');
 const fs = require('fs');
 
 export class GoldenItem extends vscode.TreeItem {
-    readonly label: string | undefined;
+    readonly label: string;
     readonly failureFolder: string;
-    readonly imageMaster: string | undefined;
-    readonly imageFailure: string | undefined;
-    readonly imageIsolated: string | undefined;
-    readonly imageMasked: string | undefined;
-    readonly width: number | undefined;
-    readonly height: number | undefined;
+    readonly imageMaster: string;
+    readonly imageFailure: string;
+    readonly imageIsolated: string;
+    readonly imageMasked: string;
+    readonly width: number;
+    readonly height: number;
 
     public children: GoldenItem[];
 
     constructor(label: string, failureFolder: string, imageMaster: string, imageFailure: string, imageIsolated: string, imageMasked: string, width: number, height: number) {
         super(label, vscode.TreeItemCollapsibleState.None);
+        this.label = label;
         this.failureFolder = failureFolder;
         this.imageMaster = imageMaster;
         this.imageFailure = imageFailure;
