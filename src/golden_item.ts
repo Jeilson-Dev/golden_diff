@@ -4,6 +4,7 @@ const fs = require('fs');
 
 export class GoldenItem extends vscode.TreeItem {
     readonly label: string | undefined;
+    readonly failureFolder: string;
     readonly imageMaster: string | undefined;
     readonly imageFailure: string | undefined;
     readonly imageIsolated: string | undefined;
@@ -11,17 +12,19 @@ export class GoldenItem extends vscode.TreeItem {
     readonly width: number | undefined;
     readonly height: number | undefined;
 
-    public children: GoldenItem[] | undefined;
+    public children: GoldenItem[];
 
-    constructor(label: string, imageMaster: string, imageFailure: string, imageIsolated: string, imageMasked: string, width: number, height: number) {
+    constructor(label: string, failureFolder: string, imageMaster: string, imageFailure: string, imageIsolated: string, imageMasked: string, width: number, height: number) {
         super(label, vscode.TreeItemCollapsibleState.None);
+        this.failureFolder = failureFolder;
         this.imageMaster = imageMaster;
         this.imageFailure = imageFailure;
         this.imageIsolated = imageIsolated;
         this.imageMasked = imageMasked;
         this.width = width;
         this.height = height;
-        this.collapsibleState = vscode.TreeItemCollapsibleState.None;
+        this.children = [];
+        this.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed;
     }
 
 

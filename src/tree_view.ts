@@ -1,13 +1,14 @@
 import * as vscode from 'vscode';
 const sizeOf = require('image-size');
 const fs = require('fs');
+import path from 'path';
 
 import { GoldenItem } from './golden_item';
 import { GoldenProject } from './golden_project';
 export namespace goldensNameSpace {
     export class TreeGoldenView implements vscode.TreeDataProvider<GoldenItem> {
-        goldenData: GoldenItem[] = [];
-        private projects: GoldenProject[] = [];
+
+        projectsData: GoldenItem[] = [];
 
         private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
 
@@ -16,51 +17,90 @@ export namespace goldensNameSpace {
         constructor() {
             vscode.commands.registerCommand('golden_failures.itemClicked', r => this.itemClicked(r));
             vscode.commands.registerCommand('golden_failures.refresh', () => this.refresh());
+            vscode.commands.registerCommand('golden_failures.clear', () => this.clearGoldenFailures());
+
         }
         public getTreeItem(element: GoldenItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
-            item.command = { command: 'golden_failures.itemClicked', title: 'element', arguments: [element] };
+            item.command = element.failureFolder == '' ? { command: 'golden_failures.itemClicked', title: 'element', arguments: [element] } : undefined;
             return item;
         }
 
         public getChildren(element: GoldenItem | undefined): vscode.ProviderResult<GoldenItem[]> {
-            if (element === undefined) { return this.goldenData; }
+            if (element === undefined) { return this.projectsData; }
             else { return element.children; }
         }
 
         public async refresh() {
             if (vscode.workspace.workspaceFolders) {
-                this.goldenData = [];
-                await this.getGoldens();
+                this.projectsData = [];
+                await this.getProjects();
+
                 this.onDidChangeGoldenTreeData.fire(undefined);
             }
         }
 
-        public async getGoldens() {
+        public async clearGoldenFailures() {
+
+            await this.projectsData.map(async (project) => {
+                try {
+                    const uri = vscode.Uri.file(project.failureFolder);
+                    const folderExists = await vscode.workspace.fs.stat(uri);
+                    if (folderExists.type === vscode.FileType.Directory) {
+                        await vscode.workspace.fs.delete(uri, { recursive: true });
+                    }
+                } catch (error) {
+                    console.error('Get some error on clear');
+                }
+            });
+            this.refresh();
+        }
+
+        public async getProjects() {
             const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
+
             let projectsPattern = '**/pubspec.yaml';
-            let filePattern = '**/*_testImage.png';
             const excludePattern = '**/{ios,macos,windows,android,linux,.*}/**';
 
             if (!workspaceRoot) { vscode.window.showInformationMessage('Its an empty workspace'); }
 
             else {
 
-
                 const projectsFolder = await vscode.workspace.findFiles(projectsPattern, excludePattern);
 
-                const projects = (await Promise.all(projectsFolder.map(async (project) => {
-                    let projectFolder = project.path.replace('pubspec.yaml', 'test/golden_test');
-                    if (fs.existsSync(projectFolder)) {
-                        return projectFolder;
+                await Promise.all(projectsFolder.map(async (project) => {
+                    let failuresFolder = project.path.replace('pubspec.yaml', 'test/golden_test/failures');
+                    if (fs.existsSync(failuresFolder)) {
+                        let projectFolder = project.path.replace('pubspec.yaml', '');
+                        this.projectsData.push(new GoldenItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0));
                     }
                 }
-                ))).filter((project) => project !== undefined);
+                ));
+                this.projectsData.map(async (project) => {
+                    await this.getGoldens(project);
+                });
 
 
+            }
+        }
 
-                console.log(projects);
-                let fileNames = await vscode.workspace.findFiles(filePattern);
+        public async getGoldens(project: GoldenItem) {
+            const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
+
+            let filePattern = '**/*_testImage.png';
+
+
+            if (!workspaceRoot) { vscode.window.showInformationMessage('Its an empty workspace'); }
+
+            else {
+
+
+                let failures = await vscode.workspace.findFiles(filePattern);
+                let fileNames = failures.filter(file => {
+                    const filePath = file.fsPath;
+                    const fileFolderPath = path.dirname(filePath);
+                    return fileFolderPath === project.failureFolder;
+                });
 
                 await Promise.all(fileNames.map(async (failureImage) => {
                     let width, height;
@@ -107,13 +147,13 @@ export namespace goldensNameSpace {
                     let imageMaster = failureImage.path.replace('_testImage.png', '_masterImage.png');
                     let imageIsolated = failureImage.path.replace('_testImage.png', '_isolatedDiff.png');
                     let imageMasked = failureImage.path.replace('_testImage.png', '_maskedDiff.png');
-                    return this.goldenData.push(new GoldenItem(label, imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
+                    return project.children.push(new GoldenItem(label, '', imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
                 }));
 
             }
         }
         itemClicked(item: GoldenItem) {
-            const panel = vscode.window.createWebviewPanel('showDiff', item.label!, vscode.ViewColumn.One, { enableScripts: true });
+            const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });
             panel.webview.html = `<!DOCTYPE html>
             <html lang="en">
             <head>

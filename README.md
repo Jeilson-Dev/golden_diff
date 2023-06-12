@@ -47,10 +47,13 @@ I noticed that the list is not sorted, whe  you refresh sometimes the items will
 ### 1.0.0
 * fix size aspect ratio
 * preparing code to new features
+### 1.0.1
+* added clear function
+* tree view by project
 
 
 
 ---
 <a href="https://www.flaticon.com/free-icons/golden-retriever" title="golden retriever icons">Golden retriever icons created by Freepik - Flaticon</a>
-
+<a href="https://www.flaticon.com/free-icons/clear" title="clear icons">Clear icons created by LAFS - Flaticon</a>
 **Enjoy!**

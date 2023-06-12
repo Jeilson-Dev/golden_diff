@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/jeilsonaraujo/golden_diff.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -31,6 +31,11 @@
     "menus": {
       "view/title": [
         {
+          "command": "golden_failures.clear",
+          "when": "view == golden_failures",
+          "group": "navigation@0"
+        },
+        {
           "command": "golden_failures.refresh",
           "when": "view == golden_failures",
           "group": "navigation@0"
@@ -43,8 +48,16 @@
         "title": "tree view item"
       },
       {
+        "command": "golden_failures.clear",
+        "title": "Clear",
+        "icon": {
+          "light": "resources/light/clear.png",
+          "dark": "resources/dark/clear.png"
+        }
+      },
+      {
         "command": "golden_failures.refresh",
-        "title": "refresh",
+        "title": "Refresh",
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
