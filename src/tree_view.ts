@@ -83,9 +83,6 @@ export namespace goldensNameSpace {
                 });
 
                 this.projectsData.sort((projectA, projectB) => projectA.label.localeCompare(projectB.label));
-                console.log(new Set(this.projectsData));
-                this.projectsData = Array.from(new Set(this.projectsData));
-                console.log(this.projectsData);
             }
         }
 
