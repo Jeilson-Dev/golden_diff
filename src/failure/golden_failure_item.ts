@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 const sizeOf = require('image-size');
 const fs = require('fs');
 
-export class GoldenItem extends vscode.TreeItem {
+export class GoldenFailureItem extends vscode.TreeItem {
     readonly label: string;
     readonly failureFolder: string;
     readonly imageMaster: string;
@@ -12,7 +12,7 @@ export class GoldenItem extends vscode.TreeItem {
     readonly width: number;
     readonly height: number;
 
-    public children: GoldenItem[];
+    public children: GoldenFailureItem[];
 
     constructor(label: string, failureFolder: string, imageMaster: string, imageFailure: string, imageIsolated: string, imageMasked: string, width: number, height: number) {
         super(label, vscode.TreeItemCollapsibleState.None);

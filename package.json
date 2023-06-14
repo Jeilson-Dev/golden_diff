@@ -8,12 +8,13 @@
     "type": "git",
     "url": "https://github.com/jeilsonaraujo/golden_diff.git"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "engines": {
     "vscode": "^1.77.0"
   },
   "categories": [
-    "Testing"
+    "Testing",
+    "Debuggers"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -24,6 +25,11 @@
           "id": "golden_failures",
           "name": "Golden Test Failures",
           "icon": "assets/golden_outlined.png",
+          "contextualTitle": "Golden Test Failures"
+        },
+        {
+          "id": "golden_library",
+          "name": "Golden Test Library",
           "contextualTitle": "Golden Test Failures"
         }
       ]
@@ -39,12 +45,26 @@
           "command": "golden_failures.refresh",
           "when": "view == golden_failures",
           "group": "navigation@0"
+        },
+        {
+          "command": "goldens.openLibrary",
+          "when": "view == golden_library",
+          "group": "navigation@0"
+        },
+        {
+          "command": "goldens.refresh",
+          "when": "view == golden_library",
+          "group": "navigation@0"
         }
       ]
     },
     "commands": [
       {
         "command": "golden_failures.item_clicked",
+        "title": "tree view item"
+      },
+      {
+        "command": "golden.item_clicked",
         "title": "tree view item"
       },
       {
@@ -61,6 +81,22 @@
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "goldens.refresh",
+        "title": "Refresh Goldens",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "goldens.openLibrary",
+        "title": "Golden Library",
+        "icon": {
+          "light": "resources/light/library.png",
+          "dark": "resources/dark/library.png"
         }
       }
     ]

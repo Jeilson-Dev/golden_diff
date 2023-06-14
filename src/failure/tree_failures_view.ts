@@ -3,16 +3,16 @@ const sizeOf = require('image-size');
 const fs = require('fs');
 import path from 'path';
 
-import { GoldenItem } from './golden_item';
-import { GoldenProject } from './golden_project';
-export namespace goldensNameSpace {
-    export class TreeGoldenView implements vscode.TreeDataProvider<GoldenItem> {
+import { GoldenFailureItem } from './golden_failure_item';
 
-        projectsData: GoldenItem[] = [];
+export namespace failuressNameSpace {
+    export class TreeFailureView implements vscode.TreeDataProvider<GoldenFailureItem> {
+
+        projectsData: GoldenFailureItem[] = [];
         isRefreshing = false;
-        private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
+        private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenFailureItem | undefined> = new vscode.EventEmitter<GoldenFailureItem | undefined>();
 
-        readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
+        readonly onDidChangeTreeData?: vscode.Event<GoldenFailureItem | undefined> = this.onDidChangeGoldenTreeData.event;
 
         constructor() {
             vscode.commands.registerCommand('golden_failures.itemClicked', item => this.itemClicked(item));
@@ -20,13 +20,13 @@ export namespace goldensNameSpace {
             vscode.commands.registerCommand('golden_failures.clear', () => this.clearGoldenFailures());
 
         }
-        public getTreeItem(element: GoldenItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
+        public getTreeItem(element: GoldenFailureItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
             item.command = element.failureFolder == '' ? { command: 'golden_failures.itemClicked', title: 'element', arguments: [element] } : undefined;
             return item;
         }
 
-        public getChildren(element: GoldenItem | undefined): vscode.ProviderResult<GoldenItem[]> {
+        public getChildren(element: GoldenFailureItem | undefined): vscode.ProviderResult<GoldenFailureItem[]> {
             if (element === undefined) { return this.projectsData; }
             else { return element.children; }
         }
@@ -74,7 +74,7 @@ export namespace goldensNameSpace {
                     let failuresFolder = project.path.replace('pubspec.yaml', 'test/golden_test/failures');
                     if (fs.existsSync(failuresFolder)) {
                         let projectFolder = project.path.replace('pubspec.yaml', '');
-                        this.projectsData.push(new GoldenItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0));
+                        this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0));
                     }
                 }
                 ));
@@ -86,7 +86,7 @@ export namespace goldensNameSpace {
             }
         }
 
-        public async getGoldens(project: GoldenItem) {
+        public async getGoldens(project: GoldenFailureItem) {
             const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
 
             if (!workspaceRoot) { vscode.window.showInformationMessage('Its an empty workspace'); }
@@ -145,13 +145,13 @@ export namespace goldensNameSpace {
                     let imageMaster = failureImage.path.replace('_testImage.png', '_masterImage.png');
                     let imageIsolated = failureImage.path.replace('_testImage.png', '_isolatedDiff.png');
                     let imageMasked = failureImage.path.replace('_testImage.png', '_maskedDiff.png');
-                    return project.children.push(new GoldenItem(label, '', imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
+                    return project.children.push(new GoldenFailureItem(label, '', imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
                 }));
 
             }
             project.children.sort((failureA, failureB) => failureA.label.localeCompare(failureB.label));
         }
-        itemClicked(item: GoldenItem) {
+        itemClicked(item: GoldenFailureItem) {
             const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });
             panel.webview.html = `<!DOCTYPE html>
             <html lang="en">
