@@ -74,7 +74,7 @@ export namespace failuressNameSpace {
                     let failuresFolder = project.path.replace('pubspec.yaml', 'test/golden_test/failures');
                     if (fs.existsSync(failuresFolder)) {
                         let projectFolder = project.path.replace('pubspec.yaml', '');
-                        this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0));
+                        this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Expanded));
                     }
                 }
                 ));
@@ -145,7 +145,7 @@ export namespace failuressNameSpace {
                     let imageMaster = failureImage.path.replace('_testImage.png', '_masterImage.png');
                     let imageIsolated = failureImage.path.replace('_testImage.png', '_isolatedDiff.png');
                     let imageMasked = failureImage.path.replace('_testImage.png', '_maskedDiff.png');
-                    return project.children.push(new GoldenFailureItem(label, '', imageMaster, imageFailure, imageIsolated, imageMasked, width, height));
+                    return project.children.push(new GoldenFailureItem(label, '', imageMaster, imageFailure, imageIsolated, imageMasked, width, height, vscode.TreeItemCollapsibleState.None));
                 }));
 
             }

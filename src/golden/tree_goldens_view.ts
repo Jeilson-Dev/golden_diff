@@ -59,7 +59,7 @@ export namespace goldensNameSpace {
                     let goldenFolder = project.path.replace('pubspec.yaml', 'test/golden_test/goldens');
                     if (fs.existsSync(goldenFolder)) {
                         let projectFolder = project.path.replace('pubspec.yaml', '');
-                        this.projectsData.push(new GoldenItem(path.basename(projectFolder), goldenFolder, '', 0, 0));
+                        this.projectsData.push(new GoldenItem(path.basename(projectFolder), goldenFolder, '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
                     }
                 }
                 ));
@@ -129,7 +129,7 @@ export namespace goldensNameSpace {
                     let labelArray = goldenImage.path.split('/');
                     let label = labelArray[labelArray.length - 1].replace('.png', '');
                     let image = goldenImage.path;
-                    return project.children.push(new GoldenItem(label, '', image, width, height));
+                    return project.children.push(new GoldenItem(label, '', image, width, height, vscode.TreeItemCollapsibleState.None));
 
                 }));
 

@@ -9,8 +9,9 @@ export class GoldenItem extends vscode.TreeItem {
     readonly width: number;
     readonly height: number;
     public children: GoldenItem[];
+    public collapsibleState: vscode.TreeItemCollapsibleState;
 
-    constructor(label: string, imageFolder: string, image: string, width: number, height: number) {
+    constructor(label: string, imageFolder: string, image: string, width: number, height: number, collapsibleState: vscode.TreeItemCollapsibleState) {
         super(label, vscode.TreeItemCollapsibleState.None);
         this.label = label;
         this.imageFolder = imageFolder;
@@ -18,7 +19,7 @@ export class GoldenItem extends vscode.TreeItem {
         this.width = width;
         this.height = height;
         this.children = [];
-        this.collapsibleState = vscode.TreeItemCollapsibleState.Collapsed;
+        this.collapsibleState = collapsibleState;
     }
 
 

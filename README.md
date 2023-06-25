@@ -1,7 +1,6 @@
 # Golden Diff
 
-Easily compare golden failures and check the difference.
-
+Easily compare golden failures and check the difference. A valuable tool to save you time in Flutter development and automated tests.
 ## Some contributions
 
 <p>Thanks <a href='https://github.com/bbcbreno'>bbcBreno</a> for this suggestion of the extension icon. Thank you for your valuable assistance!</p>
@@ -56,6 +55,10 @@ This shows how easy is to compare the images:
 * fix duplicated itens on tree
 ### 1.0.3
 * automatic refresh when detect new failures
+### 1.0.4
+* golden library
+### 1.0.5
+* update tree view
 
 
 
