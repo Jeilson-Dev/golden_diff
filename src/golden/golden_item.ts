@@ -1,6 +1,4 @@
 import * as vscode from 'vscode';
-const sizeOf = require('image-size');
-const fs = require('fs');
 
 export class GoldenItem extends vscode.TreeItem {
     readonly label: string;

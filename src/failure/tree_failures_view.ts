@@ -5,24 +5,25 @@ import path from 'path';
 
 import { GoldenFailureItem } from './golden_failure_item';
 
-export namespace failuressNameSpace {
+export namespace failuresNameSpace {
     export class TreeFailureView implements vscode.TreeDataProvider<GoldenFailureItem> {
 
-        projectsData: GoldenFailureItem[] = [];
         isRefreshing = false;
+        projectsData: GoldenFailureItem[] = [];
+
+        constructor() {
+            vscode.commands.registerCommand('goldenFailures.itemClicked', item => this.itemClicked(item));
+            vscode.commands.registerCommand('goldenFailures.refresh', () => this.isRefreshing ? undefined : this.refresh());
+            vscode.commands.registerCommand('goldenFailures.clear', () => this.clearGoldenFailures());
+        }
+
         private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenFailureItem | undefined> = new vscode.EventEmitter<GoldenFailureItem | undefined>();
 
         readonly onDidChangeTreeData?: vscode.Event<GoldenFailureItem | undefined> = this.onDidChangeGoldenTreeData.event;
 
-        constructor() {
-            vscode.commands.registerCommand('golden_failures.itemClicked', item => this.itemClicked(item));
-            vscode.commands.registerCommand('golden_failures.refresh', () => this.isRefreshing ? undefined : this.refresh());
-            vscode.commands.registerCommand('golden_failures.clear', () => this.clearGoldenFailures());
-
-        }
         public getTreeItem(element: GoldenFailureItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
-            item.command = element.failureFolder == '' ? { command: 'golden_failures.itemClicked', title: 'element', arguments: [element] } : undefined;
+            item.command = element.failureFolder == '' ? { command: 'goldenFailures.itemClicked', title: 'element', arguments: [element] } : undefined;
             return item;
         }
 
@@ -151,6 +152,7 @@ export namespace failuressNameSpace {
             }
             project.children.sort((failureA, failureB) => failureA.label.localeCompare(failureB.label));
         }
+
         itemClicked(item: GoldenFailureItem) {
             const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });
             panel.webview.html = `<!DOCTYPE html>

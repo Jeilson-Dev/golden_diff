@@ -10,16 +10,17 @@ export namespace goldensNameSpace {
 
         projectsData: GoldenItem[] = [];
         isRefreshing = false;
-        private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
-
-        readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
 
         constructor() {
             vscode.commands.registerCommand('golden.itemClicked', item => this.itemClicked(item));
             vscode.commands.registerCommand('goldens.refresh', () => this.isRefreshing ? undefined : this.refresh());
             vscode.commands.registerCommand('goldens.openLibrary', () => this.openLibrary(this.projectsData));
-
         }
+
+        private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
+
+        readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
+
         public getTreeItem(element: GoldenItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
             item.command = element.imageFolder == '' ? { command: 'golden.itemClicked', title: 'element', arguments: [element] } : undefined;
@@ -136,6 +137,7 @@ export namespace goldensNameSpace {
             }
             project.children.sort((imageA, imageB) => imageA.label.localeCompare(imageB.label));
         }
+
         itemClicked(item: GoldenItem) {
             const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });
             panel.webview.html = `<!DOCTYPE html>

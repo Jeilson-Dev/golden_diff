@@ -31,12 +31,12 @@
     "views": {
       "golden_diff": [
         {
-          "id": "golden_failures",
+          "id": "goldenFailures",
           "name": "Failures",
           "contextualTitle": "Golden Test Failures"
         },
         {
-          "id": "golden_library",
+          "id": "goldenLibrary",
           "name": "Golden Test Library",
           "contextualTitle": "Golden Test Failures"
         }
@@ -45,30 +45,30 @@
     "menus": {
       "view/title": [
         {
-          "command": "golden_failures.clear",
-          "when": "view == golden_failures",
+          "command": "goldenFailures.clear",
+          "when": "view == goldenFailures",
           "group": "navigation@0"
         },
         {
-          "command": "golden_failures.refresh",
-          "when": "view == golden_failures",
+          "command": "goldenFailures.refresh",
+          "when": "view == goldenFailures",
           "group": "navigation@0"
         },
         {
           "command": "goldens.openLibrary",
-          "when": "view == golden_library",
+          "when": "view == goldenLibrary",
           "group": "navigation@0"
         },
         {
           "command": "goldens.refresh",
-          "when": "view == golden_library",
+          "when": "view == goldenLibrary",
           "group": "navigation@0"
         }
       ]
     },
     "commands": [
       {
-        "command": "golden_failures.item_clicked",
+        "command": "goldenFailures.item_clicked",
         "title": "tree view item"
       },
       {
@@ -76,7 +76,7 @@
         "title": "tree view item"
       },
       {
-        "command": "golden_failures.clear",
+        "command": "goldenFailures.clear",
         "title": "Clear",
         "icon": {
           "light": "resources/light/clear.png",
@@ -84,7 +84,7 @@
         }
       },
       {
-        "command": "golden_failures.refresh",
+        "command": "goldenFailures.refresh",
         "title": "Refresh",
         "icon": {
           "light": "resources/light/refresh.svg",
