@@ -59,6 +59,9 @@ This shows how easy is to compare the images:
 * golden library
 ### 1.0.5
 * update tree view
+### 1.0.6
+* refactor code
+* revert update tree view
 
 
 

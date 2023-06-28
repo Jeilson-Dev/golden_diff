@@ -75,7 +75,7 @@ export namespace failuresNameSpace {
                     let failuresFolder = project.path.replace('pubspec.yaml', 'test/golden_test/failures');
                     if (fs.existsSync(failuresFolder)) {
                         let projectFolder = project.path.replace('pubspec.yaml', '');
-                        this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Expanded));
+                        this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failuresFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
                     }
                 }
                 ));
@@ -154,7 +154,7 @@ export namespace failuresNameSpace {
         }
 
         itemClicked(item: GoldenFailureItem) {
-            const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.One, { enableScripts: true });
+            const panel = vscode.window.createWebviewPanel(item.label!, item.label!, vscode.ViewColumn.Active, { enableScripts: true });
             panel.webview.html = `<!DOCTYPE html>
             <html lang="en">
             <head>
