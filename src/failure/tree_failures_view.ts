@@ -244,16 +244,21 @@ export namespace failuresNameSpace {
                     
                     }
                 </style>
+               
             </head>
 
             <body>
-
+            <h3>${item.label} </h3>
+            
                 <div class="tab">
                     <button class="tablinks"  id="firstTab" onclick="openTab(event, 'Tab1')">Diff [Test < > Master]<br>Hover To Compare</button>
                     <button class="tablinks" onclick="openTab(event, 'Tab2')">Test Image<br>[Failure]</button>
                     <button class="tablinks" onclick="openTab(event, 'Tab3')">Master Image<br>[Expect]</button>
                     <button class="tablinks" onclick="openTab(event, 'Tab4')">Isolated Image<br>&nbsp</button>
                     <button class="tablinks" onclick="openTab(event, 'Tab5')">Masked Image<br>&nbsp</button>
+                   
+
+                    
                 </div>
 
                 <div id="Tab1" class="tabcontent">

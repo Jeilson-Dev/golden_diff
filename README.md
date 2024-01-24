@@ -62,6 +62,8 @@ This shows how easy is to compare the images:
 ### 1.0.6
 * refactor code
 * revert update tree view
+### 1.0.7
+* add a title to failures view
 
 
 
