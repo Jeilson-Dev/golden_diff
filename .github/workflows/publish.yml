@@ -5,14 +5,14 @@ on:
   pull_request:
    
 jobs:
-  integration-tests:
+  publish-extension:
     runs-on: ubuntu-latest
     environment: development
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '18.x'
       - name: setup vsce
         run: npm install -g @vscode/vsce
       
