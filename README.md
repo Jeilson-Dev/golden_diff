@@ -66,8 +66,8 @@ Here, you can explore the various types of golden tests available, offering insi
 * revert update tree view
 ### 1.0.7
 * add a title to failures view
-
-
+### 1.0.8
+* setup automatic deploy
 
 ---
 <a href="https://www.flaticon.com/free-icons/golden-retriever" title="golden retriever icons">Golden retriever icons created by Freepik - Flaticon</a><br>
