@@ -16,7 +16,7 @@ jobs:
         run: npm install -g @vscode/vsce
       
       - name: generate package
-        run: vsce package
+        run: npm install && vsce package
       
       - name: Publish
         if: success()
