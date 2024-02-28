@@ -7,10 +7,9 @@ on:
 jobs:
   publish-extension:
     runs-on: ubuntu-latest
-    environment: development
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: '18.x'
       - name: setup vsce
@@ -25,4 +24,4 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
       
- 
+          
