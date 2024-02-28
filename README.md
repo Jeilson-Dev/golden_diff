@@ -31,7 +31,8 @@ With the Golden Diff extension, pinpointing errors becomes effortless. Simply na
 
 
 
-Here, you can explore the various types of golden tests available, offering insight into what's happening behind the scenes. Golden Diff consolidates this information, streamlining your workflow and saving you precious time
+Here, you can explore the various types of golden tests available, offering insight into what's happening behind the scenes. Golden Diff consolidates this information, streamlining your workflow and saving you precious time:
+
 ![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/3%20-%20see%20what%20happens.gif)
 
 
