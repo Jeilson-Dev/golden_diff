@@ -13,11 +13,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-  
-      - name: Run Fastlane
-        working-directory: ./android
-        run: fastlane send_message_slack
-        env: 
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            
+      - name: setup vsce
+        run: npm install -g @vscode/vsce
+      
  
