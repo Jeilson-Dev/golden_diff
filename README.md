@@ -18,21 +18,21 @@ Once there are test failures on your project, there will be a slider that reveal
 
 ## Let's see an example:
 
-### Imagine you've made some alterations, and suddenly, the tests begin to fail:
+Imagine you've made some alterations, and suddenly, the tests begin to fail:
 
-![image](https://user-images.githubusercontent.com/46649531/236210509-4a09e477-be94-4842-9daa-c1d5e2978f22.png)
-
-
-### With the Golden Diff extension, pinpointing errors becomes effortless. Simply navigate to the extension to quickly identify failures, compare expected versus generated outcomes, and save valuable time troubleshooting.
+![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/1%20-%20test%20fails.gif))
 
 
+With the Golden Diff extension, pinpointing errors becomes effortless. Simply navigate to the extension to quickly identify failures, compare expected versus generated outcomes, and save valuable time troubleshooting.
 
 
-<img width="700" alt="image" src="https://user-images.githubusercontent.com/46649531/236210392-023905e1-4b28-4021-a8aa-6c9079792279.png">
+
+![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/2%20-%20find%20the%20fail.gif)
 
 
-## Here, you can explore the various types of golden tests available, offering insight into what's happening behind the scenes. Golden Diff consolidates this information, streamlining your workflow and saving you precious time
-![image](https://user-images.githubusercontent.com/46649531/236210692-c65e8ee1-9542-443e-8013-1d51530f7026.gif)
+
+Here, you can explore the various types of golden tests available, offering insight into what's happening behind the scenes. Golden Diff consolidates this information, streamlining your workflow and saving you precious time
+![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/3%20-%20see%20what%20happens.gif)
 
 
 ## Release Notes
