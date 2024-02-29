@@ -1,5 +1,7 @@
 # Golden Diff
 
+[![Publish Extension](https://github.com/jeilsonaraujo/golden_diff/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/jeilsonaraujo/golden_diff/actions/workflows/publish.yml)
+
 Easily compare golden failures and check the difference. A valuable tool to save you time in Flutter development and automated tests.
 ## Some contributions
 
