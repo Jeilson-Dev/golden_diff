@@ -20,7 +20,7 @@ Once there are test failures on your project, there will be a slider that reveal
 
 Imagine you've made some alterations, and suddenly, the tests begin to fail:
 
-![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/1%20-%20test%20fails.gif))
+![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/1%20-%20test%20fails.gif)
 
 
 With the Golden Diff extension, pinpointing errors becomes effortless. Simply navigate to the extension to quickly identify failures, compare expected versus generated outcomes, and save valuable time troubleshooting.
