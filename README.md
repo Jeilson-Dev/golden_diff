@@ -3,11 +3,6 @@
 [![Publish Extension](https://github.com/jeilsonaraujo/golden_diff/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/jeilsonaraujo/golden_diff/actions/workflows/publish.yml)
 
 Easily compare golden failures and check the difference. A valuable tool to save you time in Flutter development and automated tests.
-## Some contributions
-
-<p>Thanks <a href='https://github.com/bbcbreno'>bbcBreno</a> for this suggestion of the extension icon. Thank you for your valuable assistance!</p>
-<p><a href='https://github.com/RyanHolanda'>RyanHolanda</a> thank you for suggesting the feature of a library golden of images. Thank you for your valuable contribution and for sharing such an insightful idea!</p>
-<p><a href='https://github.com/paulononaka'>PauloNonaka</a> for their invaluable contributions in enhancing the README and providing the idea for a feature to clear golden failure images. Your efforts and ideas have greatly improved the project.</p>
 
 ## Features
 
@@ -37,6 +32,11 @@ Here, you can explore the various types of golden tests available, offering insi
 
 ![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/3%20-%20see%20what%20happens.gif)
 
+## Some contributions
+
+<p>Thanks <a href='https://github.com/bbcbreno'>bbcBreno</a> for this suggestion of the extension icon. Thank you for your valuable assistance!</p>
+<p><a href='https://github.com/RyanHolanda'>RyanHolanda</a> thank you for suggesting the feature of a library golden of images. Thank you for your valuable contribution and for sharing such an insightful idea!</p>
+<p><a href='https://github.com/paulononaka'>PauloNonaka</a> for their invaluable contributions in enhancing the README and providing the idea for a feature to clear golden failure images. Your efforts and ideas have greatly improved the project.</p>
 
 ## Release Notes
 ### 0.0.1
