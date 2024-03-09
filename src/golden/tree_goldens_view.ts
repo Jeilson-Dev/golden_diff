@@ -1,7 +1,7 @@
+import path from 'path';
 import * as vscode from 'vscode';
 const sizeOf = require('image-size');
 const fs = require('fs');
-import path from 'path';
 
 import { GoldenItem } from '../golden/golden_item';
 
@@ -20,6 +20,7 @@ export namespace goldensNameSpace {
         private onDidChangeGoldenTreeData: vscode.EventEmitter<GoldenItem | undefined> = new vscode.EventEmitter<GoldenItem | undefined>();
 
         readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
+
 
         public getTreeItem(element: GoldenItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
@@ -57,7 +58,7 @@ export namespace goldensNameSpace {
                 const projectsFolder = await vscode.workspace.findFiles(projectsPattern, excludePattern);
 
                 await Promise.all(projectsFolder.map(async (project) => {
-                    let goldenFolder = project.path.replace('pubspec.yaml', 'test/golden_test/goldens');
+                    let goldenFolder = project.path.replace('pubspec.yaml', 'test');
                     if (fs.existsSync(goldenFolder)) {
                         let projectFolder = project.path.replace('pubspec.yaml', '');
                         this.projectsData.push(new GoldenItem(path.basename(projectFolder), goldenFolder, '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
@@ -77,15 +78,15 @@ export namespace goldensNameSpace {
 
             else {
 
-                let filePattern = '**/*.png';
+                let filePattern = '**/goldens/*.png';
                 const excludePattern = '**/{ios,macos,windows,android,linux,.*}/**';
 
                 let goldens = await vscode.workspace.findFiles(filePattern, excludePattern);
                 let fileNames = goldens.filter(file => {
                     const filePath = file.fsPath;
                     const fileFolderPath = path.dirname(filePath);
-                    if (filePath.includes('test/golden_test'))
-                        return fileFolderPath === project.imageFolder;
+
+                    return filePath.includes('goldens') && filePath.includes(fileFolderPath);
                 });
 
                 await Promise.all(fileNames.map(async (goldenImage) => {

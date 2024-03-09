@@ -4,56 +4,59 @@ import { goldensNameSpace } from './golden/tree_goldens_view';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	let treeFailures = new failuresNameSpace.TreeFailureView();
-	let treeGoldens = new goldensNameSpace.TreeGoldenView();
-	vscode.window.registerTreeDataProvider('goldenFailures', treeFailures);
-	vscode.window.registerTreeDataProvider('goldenLibrary', treeGoldens);
-	treeFailures.refresh();
-	treeGoldens.refresh();
+  let treeFailures = new failuresNameSpace.TreeFailureView();
+  let treeGoldens = new goldensNameSpace.TreeGoldenView();
+  vscode.window.registerTreeDataProvider('goldenFailures', treeFailures);
+  vscode.window.registerTreeDataProvider('goldenLibrary', treeGoldens);
+  treeFailures.refresh();
+  treeGoldens.refresh();
 
-	const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
-	if (workspaceRoot) {
+  const workspaceRoot = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : '';
+  if (workspaceRoot) {
 
-		const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(workspaceRoot, '**/*'));
+    const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(workspaceRoot, '**/*'));
 
-		watcher.onDidChange((e: vscode.Uri) => {
-			const filePath = e.fsPath;
-			if (filePath.includes('test/golden_test/failures')) updateFailureTreeDebounced();
-			if (filePath.includes('test/golden_test/goldens')) updateGoldenTreeDebounced();
-		});
+    /**
+     * A function that refreshes on a specific event.
+     *
+     * @param {vscode.Uri} event - the event triggering the refresh
+     */
+    const refreshOnEvent = (event: vscode.Uri) => {
+      const filePath = event.fsPath;
+      if (filePath.includes('/failures')) updateFailureTreeDebounced();
+      if (filePath.includes('/goldens')) updateGoldenTreeDebounced();
+    };
 
-		watcher.onDidCreate((e: vscode.Uri) => {
-			const filePath = e.fsPath;
-			if (filePath.includes('test/golden_test/failures')) updateFailureTreeDebounced();
-			if (filePath.includes('test/golden_test/goldens')) updateGoldenTreeDebounced();
-		});
+    watcher.onDidChange(refreshOnEvent);
+    watcher.onDidCreate(refreshOnEvent);
+    watcher.onDidDelete(refreshOnEvent);
 
-		watcher.onDidDelete((e: vscode.Uri) => {
-			const filePath = e.fsPath;
-			if (filePath.includes('test/golden_test/failures')) updateFailureTreeDebounced();
-			if (filePath.includes('test/golden_test/goldens')) updateGoldenTreeDebounced();
-		});
 
-		context.subscriptions.push(watcher);
-	}
+    context.subscriptions.push(watcher);
+  }
 
-	function updateFailureTree() { treeFailures.refresh(); }
-	function updateGoldenTree() { treeGoldens.refresh(); }
+  function updateFailureTree() { treeFailures.refresh(); }
+  function updateGoldenTree() { treeGoldens.refresh(); }
 
-	const updateFailureTreeDebounced = debounce(updateFailureTree, 600);
-	const updateGoldenTreeDebounced = debounce(updateGoldenTree, 600);
+  const updateFailureTreeDebounced = debounce(updateFailureTree, 600);
+  const updateGoldenTreeDebounced = debounce(updateGoldenTree, 600);
 
-	function debounce<Params extends any[]>(
-		func: (...args: Params) => any,
-		timeout: number,
-	): (...args: Params) => void {
-		let timer: NodeJS.Timeout
-		return (...args: Params) => {
-			clearTimeout(timer)
-			timer = setTimeout(() => {
-				func(...args)
-			}, timeout)
-		}
-	}
+  /**
+   * Debounces a function by delaying its execution until after a specified amount of time has passed since the last time it was invoked.
+   *
+   * @param {(...args: Params) => any} func - The function to be debounced.
+   * @param {number} timeout - The amount of time to wait before executing the debounced function.
+   * @return {(...args: Params) => void} A debounced function.
+   */
+  function debounce<Params extends any[]>(
+    func: (...args: Params) => any, timeout: number): (...args: Params) => void {
+    let timer: NodeJS.Timeout
+    return (...args: Params) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        func(...args)
+      }, timeout)
+    }
+  }
 }
 
