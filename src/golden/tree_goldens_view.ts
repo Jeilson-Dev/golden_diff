@@ -21,6 +21,7 @@ export namespace goldensNameSpace {
 
         readonly onDidChangeTreeData?: vscode.Event<GoldenItem | undefined> = this.onDidChangeGoldenTreeData.event;
 
+
         public getTreeItem(element: GoldenItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
             const item = new vscode.TreeItem(element.label!, element.collapsibleState);
             item.command = element.imageFolder == '' ? { command: 'golden.itemClicked', title: 'element', arguments: [element] } : undefined;
