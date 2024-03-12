@@ -20,24 +20,32 @@ export class FailureHtml {
                         }
                         function onMouseLeave() {
                             let goldenFailure = document.getElementById('golden_failure');
+                            let browserFrame = document.getElementById('browser_frame');
+                            browserFrame.style.boxShadow = '0px 0px 25px 8px #f62424';
                             goldenFailure.style.backgroundColor = 'black';
                             goldenFailure.style.backgroundImage="url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageFailure!))}')";
                             goldenFailure.style.backgroundSize = '${item.width}px ${item.height}px';
                         }
                         function onHoverMaster() {
                             let goldenFailure = document.getElementById('golden_failure');
+                            let browserFrame = document.getElementById('browser_frame');
+                            browserFrame.style.boxShadow = '0px 0px 25px 8px #35f624';
                             goldenFailure.style.backgroundColor = 'black';
                             goldenFailure.style.backgroundImage="url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageMaster!))}')";
                             goldenFailure.style.backgroundSize = '${item.width}px ${item.height}px';
                         }
                         function onHoverIsolated() {
                             let goldenFailure = document.getElementById('golden_failure');
+                            let browserFrame = document.getElementById('browser_frame');
+                            browserFrame.style.boxShadow = '5px 4px 15px #727272';
                             goldenFailure.style.backgroundColor = 'black';
                             goldenFailure.style.backgroundImage="url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageIsolated!))}')";
                             goldenFailure.style.backgroundSize = '${item.width}px ${item.height}px';
                         }
                         function onHoverMasked() {
                             let goldenFailure = document.getElementById('golden_failure');
+                            let browserFrame = document.getElementById('browser_frame');
+                            browserFrame.style.boxShadow = '5px 4px 15px #727272';
                             goldenFailure.style.backgroundColor = 'black';
                             goldenFailure.style.backgroundImage="url('${panel.webview.asWebviewUri(vscode.Uri.file(item.imageMasked!))}')";
                             goldenFailure.style.backgroundSize = '${item.width}px ${item.height}px';
@@ -45,7 +53,7 @@ export class FailureHtml {
                         </script>
                     </head>
                     <body>
-                    <div class="browser-frame">
+                    <div id="browser_frame" class="browser-frame">
                     <div class="browser-frame-header ">
                         <div class="content-flex">
                             <div onmouseleave="onMouseLeave()" onmouseenter="onHoverMaster()" class="browser-frame-header-action-buttons close-button" > </div>

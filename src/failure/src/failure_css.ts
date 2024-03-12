@@ -41,8 +41,9 @@ export class FailureCSS {
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
+                transition: 0.2s ease-in;
                 border-radius: 8px 8px 4px 4px;
-                box-shadow: 5px 4px 15px #727272;
+                box-shadow: 0px 0px 25px 8px #f62424;
             }
             
             .browser-frame-header {
@@ -132,8 +133,8 @@ export class FailureCSS {
             .golden-image-title-icon {
                 font-size: 14px;
                 color: #a0a0a0;
-                transition: 0.4s ease-in-out;
                 background-position: 0px 2px;
+                transition: 0.2s ease-in;
                 background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuNDE0MzEgOC45NDQ0Mkw3LjY2NTc1IDEwLjExMTFMMTAuMzA3OSA2LjYxMTA4IiBzdHJva2U9IiM5NDk0OTQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTExLjA4MzQgNC4wODMzN0g1LjYzODkzQzQuNzc5ODIgNC4wODMzNyA0LjA4MzM3IDQuNzc5ODIgNC4wODMzNyA1LjYzODkzVjExLjA4MzRDNC4wODMzNyAxMS45NDI1IDQuNzc5ODIgMTIuNjM4OSA1LjYzODkzIDEyLjYzODlIMTEuMDgzNEMxMS45NDI1IDEyLjYzODkgMTIuNjM4OSAxMS45NDI1IDEyLjYzODkgMTEuMDgzNFY1LjYzODkzQzEyLjYzODkgNC43Nzk4MiAxMS45NDI1IDQuMDgzMzcgMTEuMDgzNCA0LjA4MzM3WiIgc3Ryb2tlPSIjOTQ5NDk0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yLjE3ODU4IDkuMzMxNzlMMS4zNzgyNCAzLjk0NjQ2QzEuMjUyMjQgMy4wOTYzNSAxLjgzODY5IDIuMzA1MzUgMi42ODgwMiAyLjE3OTM1TDguMDczMzYgMS4zNzkwMkM4Ljc5OTAyIDEuMjcwOTEgOS40ODExMyAxLjY4MjM1IDkuNzQ0MDIgMi4zMzQxMyIgc3Ryb2tlPSIjOTQ5NDk0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=");
                 background-repeat: no-repeat;
             }
@@ -141,6 +142,7 @@ export class FailureCSS {
                 font-size: 14px;
                 color: white;
                 background-position: 0px 2px;
+                transition: 0.2s ease-in;
                 background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgICA8cGF0aCBkPSJNNi40MTQzMSA4Ljk0NDQyTDcuNjY1NzUgMTAuMTExMUwxMC4zMDc5IDYuNjExMDgiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgICAgIDxwYXRoIGQ9Ik0xMS4wODM0IDQuMDgzMzdINS42Mzg5M0M0Ljc3OTgyIDQuMDgzMzcgNC4wODMzNyA0Ljc3OTgyIDQuMDgzMzcgNS42Mzg5M1YxMS4wODM0QzQuMDgzMzcgMTEuOTQyNSA0Ljc3OTgyIDEyLjYzODkgNS42Mzg5MyAxMi42Mzg5SDExLjA4MzRDMTEuOTQyNSAxMi42Mzg5IDEyLjYzODkgMTEuOTQyNSAxMi42Mzg5IDExLjA4MzRWNS42Mzg5M0MxMi42Mzg5IDQuNzc5ODIgMTEuOTQyNSA0LjA4MzM3IDExLjA4MzQgNC4wODMzN1oiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgICAgIDxwYXRoIGQ9Ik0yLjE3ODU4IDkuMzMxNzlMMS4zNzgyNCAzLjk0NjQ2QzEuMjUyMjQgMy4wOTYzNSAxLjgzODY5IDIuMzA1MzUgMi42ODgwMiAyLjE3OTM1TDguMDczMzYgMS4zNzkwMkM4Ljc5OTAyIDEuMjcwOTEgOS40ODExMyAxLjY4MjM1IDkuNzQ0MDIgMi4zMzQxMyIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICAgICAgPC9zdmc+");
                 background-repeat: no-repeat;
             }
@@ -150,7 +152,7 @@ export class FailureCSS {
             }
             .status-image-name-copied {
                 visibility: hidden;
-                transition: 0.4s ease-in-out;
+                transition: 0.4s ease-in;
                 font-size: 14px;
                 margin-left: 10px;
                 color: white;
@@ -161,6 +163,7 @@ export class FailureCSS {
                 height: 100%;
                 width: 100%;
                 margin: auto;
+                transition: 0.2s ease-in;
             }
             
             .hidden {

@@ -6,7 +6,7 @@
 ### 0.0.3
 
 * added other views to see individual tested master masked and isolated
-* adedd hover to easy toggle on tested and master image
+* added hover to easy toggle on tested and master image
 * change icon on primary sidebar
 ### 1.0.0
 * fix size aspect ratio
@@ -15,8 +15,8 @@
 * added clear function
 * tree view by project
 ### 1.0.2
-* projects and itens are sorted
-* fix duplicated itens on tree
+* projects and items are sorted
+* fix duplicated items on tree
 ### 1.0.3
 * automatic refresh when detect new failures
 ### 1.0.4
