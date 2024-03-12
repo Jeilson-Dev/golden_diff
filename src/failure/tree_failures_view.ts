@@ -99,13 +99,15 @@ export namespace failuresNameSpace {
         await Promise.all(projectsFoundList.map(async (project) => {
           const projectFolder = project.path.replace('pubspec.yaml', '');
           const failuresFolder = await vscode.workspace.findFiles('**/failures/*_testImage.png', ignoreFolder);
-          const firstItem = failuresFolder[0]?.path || '';
-          const failureFolder = this._removeLastPart(firstItem);
+          failuresFolder.map(async (firstItem) => {
+            const failureFolder = this._removeLastPart(firstItem.path);
+            if (failureFolder.includes(projectFolder)) {
+              let projectFolder = project.path.replace('pubspec.yaml', '');
+              this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failureFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
+            }
+          })
 
-          if (failureFolder.includes(projectFolder)) {
-            let projectFolder = project.path.replace('pubspec.yaml', '');
-            this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failureFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
-          }
+
         }
         ));
         this.projectsData.map(async (project) => {
