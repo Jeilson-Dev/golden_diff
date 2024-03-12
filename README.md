@@ -76,6 +76,8 @@ Here, you can explore the various types of golden tests available, offering insi
 * find golden image and failures wherever they are
 ### 1.1.1
 * fix error to get projects
+### 2.0.0
+* implement a new visual
 
 
 <a href="https://www.flaticon.com/free-icons/golden-retriever" title="golden retriever icons">Golden retriever icons created by Freepik - Flaticon</a><br>

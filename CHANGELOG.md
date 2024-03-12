@@ -36,6 +36,8 @@
 * find golden image and failures wherever they are, this fix a bug that if the golden and failures folder are in a different location the list was not generated
 ### 1.1.1
 * fix error that was loading incorrect project to failures
+### 2.0.0
+* implement a new visual style, use a windows simulator and center the image, remove the slider
 
 
 All notable changes to the "golden-diff" extension will be documented in this file.
