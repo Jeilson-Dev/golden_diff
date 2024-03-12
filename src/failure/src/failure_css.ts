@@ -114,9 +114,15 @@ export class FailureCSS {
             }
             .golden-image-title {
                 cursor: default;
+                overflow: hidden;
+                word-wrap: break-word;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+                width: ${item.width * 0.35}px;
                 margin-left: auto;
                 margin-right: auto;
-                width: 100%;
                 text-align: center;
                 border: none;
                 padding-left: 20px;
