@@ -34,6 +34,8 @@
 * added license
 ### 1.1.0
 * find golden image and failures wherever they are, this fix a bug that if the golden and failures folder are in a different location the list was not generated
+### 1.1.1
+* fix error that was loading incorrect project to failures
 
 
 All notable changes to the "golden-diff" extension will be documented in this file.

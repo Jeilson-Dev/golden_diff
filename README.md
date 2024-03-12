@@ -74,8 +74,10 @@ Here, you can explore the various types of golden tests available, offering insi
 * added license
 ### 1.1.0
 * find golden image and failures wherever they are
+### 1.1.1
+* fix error to get projects
 
----
+
 <a href="https://www.flaticon.com/free-icons/golden-retriever" title="golden retriever icons">Golden retriever icons created by Freepik - Flaticon</a><br>
 <a href="https://www.flaticon.com/free-icons/clear" title="clear icons">Clear icons created by LAFS - Flaticon</a><br>
 <a href="https://www.flaticon.com/free-icons/dog" title="dog icons">Dog icons created by Freepik - Flaticon</a><br>
