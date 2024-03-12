@@ -17,20 +17,45 @@ Once there are test failures on your project, there will be a slider that reveal
 
 Imagine you've made some alterations, and suddenly, the tests begin to fail:
 
-![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/1%20-%20test%20fails.gif)
+### Test fails
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/1_test%20fails.gif?raw=true)
 
+### Locate the failure in list
 
 With the Golden Diff extension, pinpointing errors becomes effortless. Simply navigate to the extension to quickly identify failures, compare expected versus generated outcomes, and save valuable time troubleshooting.
 
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/2_locate_golden_failure.gif?raw=true)
+
+### Open the failure and see what happens
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/3_open_failure.gif?raw=true)
 
 
-![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/2%20-%20find%20the%20fail.gif)
-
-
+### Compare the generated images
 
 Here, you can explore the various types of golden tests available, offering insight into what's happening behind the scenes. Golden Diff consolidates this information, streamlining your workflow and saving you precious time:
 
-![image](https://raw.githubusercontent.com/jeilsonaraujo/golden_diff/main/readme_resources/3%20-%20see%20what%20happens.gif)
+### Failure vs Expected
+The Failure image will have a red shadow and the Expected image will show a green shadow to effort the difference.
+
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/4_failure_vs_expect.gif?raw=true)
+
+### Isolated image
+
+The isolated mode will present any discrepancies found between the expected image and what was actually detected.
+
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/5_isolated.gif?raw=true)
+
+### Master Image
+
+The master image will showcase both the expected and failure images overlaid, making it effortless to discern the differences.
+
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/6_masked.gif?raw=true)
+
+### Find the test easily
+
+Tap on the window title to copy the image name and locate using the search vscode resource
+
+![image](https://github.com/Jeilson-Dev/golden_diff/blob/main/readme_resources/docs/7_find_test.gif?raw=true)
 
 ## Some contributions
 
