@@ -27,5 +27,14 @@ export class GoldenFailureItem extends vscode.TreeItem {
         this.collapsibleState = collapsibleState;
     }
 
-
+public contains(projects:GoldenFailureItem[]) :boolean{
+    let contains = false;
+    projects.map(project=> {
+        if(this.failureFolder == project.failureFolder){
+            contains = true;
+        }
+        });
+        
+        return contains;
+}
 }

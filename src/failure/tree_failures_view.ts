@@ -98,14 +98,10 @@ export namespace failuresNameSpace {
 
         await Promise.all(projectsFoundList.map(async (project) => {
           const projectFolder = project.path.replace('pubspec.yaml', '');
-          const failuresFolder = await vscode.workspace.findFiles('**/failures/*_testImage.png', ignoreFolder);
-          failuresFolder.map(async (firstItem) => {
-            const failureFolder = this._removeLastPart(firstItem.path);
-            if (failureFolder.includes(projectFolder)) {
-              let projectFolder = project.path.replace('pubspec.yaml', '');
-              this.projectsData.push(new GoldenFailureItem(path.basename(projectFolder), failureFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed));
-            }
-          })
+          const failuresFolder = await this.findFailuresInProjectFolder(ignoreFolder);
+
+          this.createProjectNode(projectFolder,failuresFolder)
+         
 
 
         }
@@ -117,6 +113,23 @@ export namespace failuresNameSpace {
         this.projectsData.sort((projectA, projectB) => projectA.label.localeCompare(projectB.label));
       }
     }
+
+    public async findFailuresInProjectFolder(ignoreFolder:string):Promise<vscode.Uri[]>{
+      return await vscode.workspace.findFiles('**/failures/*_testImage.png', ignoreFolder)
+    }
+
+    public async createProjectNode(projectFolder:string, failuresFolder:vscode.Uri[]){
+      failuresFolder.map(async (firstItem) => {
+        const failureFolder = this._removeLastPart(firstItem.path);
+        if (failureFolder.includes(projectFolder)) {
+          const project = new GoldenFailureItem(path.basename(projectFolder), failureFolder, '', '', '', '', 0, 0, vscode.TreeItemCollapsibleState.Collapsed);
+          if(!project.contains(this.projectsData)){
+            this.projectsData.push(project);
+          }
+        }
+      })
+    }
+
 
     /**
      * Retrieves the golden images for the given project and updates the project's children.
