@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.0.2
+
+- Feat(GDE-12): Display a badge counter: This display a counter for Golden Diff Icon to help to track failures
+
 ### 2.0.1
 
 - FIX(GDE-11): When a test fails it’s creating a tree node of project for every tests failed.
