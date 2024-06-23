@@ -4,10 +4,12 @@ import { goldensNameSpace } from './golden/tree_goldens_view';
 
 export function activate(context: vscode.ExtensionContext) {
 
-  let treeFailures = new failuresNameSpace.TreeFailureView();
-  let treeGoldens = new goldensNameSpace.TreeGoldenView();
+  let badgeCounter = 0;
+  const treeFailures = new failuresNameSpace.TreeFailureView();
+  const treeGoldens = new goldensNameSpace.TreeGoldenView();
   vscode.window.registerTreeDataProvider('goldenFailures', treeFailures);
   vscode.window.registerTreeDataProvider('goldenLibrary', treeGoldens);
+
   treeFailures.refresh();
   treeGoldens.refresh();
 
@@ -16,15 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
 
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(workspaceRoot, '**/*'));
 
+    const goldenFailuresTreeView = vscode.window.createTreeView( "goldenFailures", { treeDataProvider: treeFailures } );
+
     /**
      * A function that refreshes on a specific event.
      *
      * @param {vscode.Uri} event - the event triggering the refresh
      */
     const refreshOnEvent = (event: vscode.Uri) => {
+      badgeCounter = 0;
       const filePath = event.fsPath;
+      
       if (filePath.includes('/failures')) updateFailureTreeDebounced();
       if (filePath.includes('/goldens')) updateGoldenTreeDebounced();
+     
+      treeFailures.projectsData.map((project)=> badgeCounter+= project.children.length)
+      goldenFailuresTreeView.badge={value:badgeCounter,tooltip:''};
     };
 
     watcher.onDidChange(refreshOnEvent);
